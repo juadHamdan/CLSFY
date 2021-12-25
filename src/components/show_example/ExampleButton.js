@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
-const ExampleButton = ({tableTitle, tableFeatures, tableItems}) => {
+const ExampleButton = ({buttonText, tableTitle, tableFeatures, tableItems}) => {
     const [showModalTable, setShowModalTable] = React.useState(false)
     return (
         <>
@@ -15,7 +15,7 @@ const ExampleButton = ({tableTitle, tableFeatures, tableItems}) => {
                 variant="extended" 
                 color="inherit">
             <InfoRoundedIcon sx={{ mr: 1 }} />
-            Show Example
+            {buttonText}
             </Fab>
 
             <AppTableModal 

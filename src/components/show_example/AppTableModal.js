@@ -5,10 +5,12 @@ const AppTableModal = ({show, onHide, title, features, items}) => {
     return (
         <div>
             <Modal 
+                size='xl'
                 show={show} 
                 onHide={onHide}
                 style={modalStyle}
                 centered
+                animation={false}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title> {title} </Modal.Title>

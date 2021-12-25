@@ -29,6 +29,7 @@ const HandleFile = ({uid, onFileSubmit, handleSwitch, TextString, FeaturesString
                     <br/><br/>
 
                     <ExampleButton
+                        buttonText={"Show Example"}
                         tableTitle={"File upload example for features classification"}
                         tableFeatures={["Feature 1", "Feature 2", "Feature 3" , "...", "Class"]} 
                         tableItems={[["0", "1", "0", "...", "0"]]}
@@ -39,6 +40,7 @@ const HandleFile = ({uid, onFileSubmit, handleSwitch, TextString, FeaturesString
                     Text (Numbers) | Class (Numbers or Strings)
                     <br/><br/>
                     <ExampleButton
+                        buttonText={"Show Example"}
                         tableTitle={"File upload example for text classification"}
                         tableFeatures={["Text", "Class"]} 
                         tableItems={[["text1", "class1"]]}

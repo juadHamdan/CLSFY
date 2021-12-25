@@ -9,6 +9,7 @@ import ClassModal from './ClassModal'
 
 const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmit, onPredictFileSubmit, modelId}) => {
     const [classPrediction, setClassPrediction] = React.useState(null)
+    const [showClassPrediction, setShowClassPrediction] = React.useState(false)
 
     const predict = async (url, dataToPredict) => {
         try {
@@ -22,6 +23,9 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
             });
             console.log(res.data)
             setClassPrediction(res.data["class"])
+            setShowClassPrediction(true)
+            onPredictFormSubmit(classPrediction)
+            console.log(classPrediction)
           } 
           catch (err) 
           {
@@ -41,7 +45,7 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
 
     const handleFormSubmit = async (data) => {
         console.log(data)
-        const url = (classifyingType === "Text" ? '/predict-data/' + uid : 'predict-features/' + uid)
+        const url = (classifyingType === "Text" ? 'predict-data/' + uid : 'predict-features/' + uid)
         predict(url, data)
     }
 
@@ -55,10 +59,9 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
             //<div style={{color: themeColor, fontSize: '1.3rem'}}>
         <Container maxWidth='md' sx={{width: "90%", fontSize: "1rem"}}>
             <ClassModal
-                show={classPrediction} 
-                onHide={() => setClassPrediction(null)} 
-                title={'Class'}
-                body={classPrediction}
+                show={showClassPrediction} 
+                onHide={() => setShowClassPrediction(false)} 
+                text={classPrediction}
             />
             {classifyingType === "Text"?
                 <>
@@ -73,6 +76,7 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
                     <br/><br/>
 
                     <ExampleButton
+                        buttonText={"Show Example"}
                         tableTitle={"File upload example for text classification"}
                         tableFeatures={["Text"]} 
                         tableItems={[["text1"]]}
@@ -93,6 +97,7 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
                     Features (Numbers)
                     <br/><br/>
                     <ExampleButton
+                        buttonText={"Show Example"}
                         tableTitle={"File upload example for features classification"}
                         tableFeatures={["Feature 1", "Feature 2", "Feature 3" , "..."]} 
                         tableItems={[["0", "1", "0", "..."]]}

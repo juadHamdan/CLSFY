@@ -9,9 +9,10 @@ const ClassModal = ({show, onHide, text}) => {
                 onHide={onHide}
                 style={modalStyle}
                 centered
+                animation={false}
                 >
                     <Modal.Body closeButton>
-                        <Modal.Title style={{textAlign:'center'}}> {text} </Modal.Title>
+                        <Modal.Title style={{textAlign:'center'}}> Class Prediction: {text} </Modal.Title>
                     </Modal.Body>
             </Modal>
         </div>
@@ -19,6 +20,7 @@ const ClassModal = ({show, onHide, text}) => {
 }
 
 const modalStyle = {
+    color: 'black',
     fontFamily: 'Calibri light',
     fontSize:'1rem'
   };

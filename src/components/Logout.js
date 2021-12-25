@@ -27,27 +27,24 @@ const Logout = ({show, onHide, onLogoutSuccess}) => {
 
     return (
         <div>
-            <Modal show={show} 
+            <Modal 
+                size='sm'
+                show={show} 
                 onHide={onHide}
                 style={modalStyle}
                 onEnter={handleLogout}
                 centered
                 >
-                <Modal.Header>
-                    <Modal.Title> התנתקות </Modal.Title>
-                </Modal.Header>
-                <Modal.Body style={{textAlign:'center'}} >
+                <Modal.Header closeButton>
+                    <Modal.Body style={{textAlign: 'center'}}> 
                     {success? 
-                        <>התנתקת בהצלחה</>
-                    : <>אנא המתן <i class="bi bi-exclamation-circle"></i></> }
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={onHide}>
-                    סגור
-                    </Button>
-                </Modal.Footer>
+                    <>Logged Out Successfully </>
+                    : 
+                    <> <i class="bi bi-exclamation-circle">Error Occured</i></> }
+                    </Modal.Body>
+                </Modal.Header>
+                <Modal.Footer/>
             </Modal>
-
         </div>
     )
 }
@@ -55,8 +52,6 @@ const Logout = ({show, onHide, onLogoutSuccess}) => {
 export default Logout
 
 const modalStyle = {
-    direction: 'rtl',
-    textAlign: 'right',
     padding: "80px",
     fontFamily: 'Calibri light',
     fontSize:'18px'

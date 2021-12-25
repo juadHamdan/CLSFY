@@ -145,7 +145,6 @@ const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
                 </Box>
 
                 <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
                     {user && user.photoURL?
@@ -154,7 +153,6 @@ const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
                         <AccountCircleRoundedIcon size="large"/>
                     }
                     </IconButton>
-                </Tooltip>
                     <Menu
                     sx={{ mt: '45px' }}
                     id="menu-appbar"

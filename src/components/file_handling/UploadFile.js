@@ -38,8 +38,10 @@ const UploadFile = ({url, onSubmit, successMessage, awaitMessage}) => {
   };
 
   const handleSubmit = async e => {
+    //const userType = "Anonymous"
     e.preventDefault();
     const formData = new FormData();
+    //formData.append('userType', userType)
     formData.append('file', file);
 
     setShowSpinner(true)

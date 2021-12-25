@@ -23,10 +23,13 @@ const Login = ({show, onHide, onLogin, onLoginSuccess}) => {
 
     return (
         <div>
-            <Modal show={show} 
-            onHide={onHide}
-            style={modalStyle}
-            centered
+            <Modal 
+                show={show} 
+                onHide={onHide}
+                size='sm'
+                style={modalStyle}
+                centered
+                animation={false}
             >
                 <Modal.Header closeButton>
                     <Modal.Title> Login </Modal.Title>

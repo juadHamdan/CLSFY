@@ -7,17 +7,22 @@ import About from'./components/About'
 import AppStepper from'./components/AppStepper'
 
 import HandleFile from'./components/file_handling/HandleFile'
+import ModelsCards from'./components/ModelsCards'
 import ScoresAndStats from'./components/scores_and_stats/ScoresAndStats'
 import HandleDataToPredict from'./components/handle_data_to_predict/HandleDataToPredict'
 
 import Container from '@mui/material/Container';
 
+import { v4 as uuidv4 } from 'uuid';
 
 const TextString = "Text"
 const FeaturesString = "Features"
 
 const firstColor = "#ffcc80"
 const secondColor = "#80cbc4"
+
+const anonymousString = "Anonymous"
+const signedString = "Signed"
 
 const scrollToRef = (ref) => ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
@@ -27,9 +32,11 @@ function App()
   const [classifyingType, setClassifyingType] = useState(TextString)
   const [accuracy, setAccuracy] = useState(0)
   const [user, setUser] = useState(null)
+  const [userType, setUserType] = useState(anonymousString)
+  const [uid, setUid] = useState(uuidv4()) //generate unique id for anonymous user
   const [features, setFeatures] = useState({})
   const [modelId, setModelId] = useState(null)
-  const [uid] = useState(1)
+  const [modelsData, setModelsData] = useState(null)
 
   const [mandatoryCourses, setMandatoryCourses] = useState(null)
   const [electiveCourses, setElectiveCourses] = useState(null)
@@ -170,9 +177,47 @@ function App()
   }
   */
 
+  const deleteModelFromDatabase = async (uid, modelIdToDelete) => {
+    const url = 'model/' + uid
+    try {
+        const res = await axios({
+            method: 'delete',
+            url: url,
+            data:{
+              modelIdToDelete
+            }
+        });
+        console.log(res.data)
+      } 
+      catch (err) 
+      {
+        console.log(err.response.status)
+      }
+}
+
+  const fetchModelsData = async (uid) => {
+    const url = 'models-data/' + uid
+    try {
+        const res = await axios({
+            method: 'get',
+            url: url
+        });
+        console.log(res.data)
+        setModelsData(res.data['models_data'])
+      } 
+      catch (err) 
+      {
+        console.log(err.response.status)
+      }
+}
+
   const onLogin = async (userFromLogin) => {
-    const uid = userFromLogin.uid
     setUser(userFromLogin)
+    setUserType(signedString)
+    setUid(userFromLogin.uid)
+    fetchModelsData(userFromLogin.uid)
+
+    
 
     /*
     const userHaveCourses = await checkUserCoursesExists(uid)
@@ -198,16 +243,17 @@ function App()
     setUser(null)
   }
 
-  const onPredictFormSumbit = async (dataToPredict) => {
-    console.log(dataToPredict)
+  const onPredictFormSubmit = async (predictedClass) => {
+    console.log(predictedClass)
     //predictFeatures(dataToPredict)
     //send to 
   }
 
-  const onPredictFileSubmit = (dataToPredict) => {
-    console.log(dataToPredict)
+  const onPredictFileSubmit = (predictedClass) => {
+    console.log(predictedClass)
   }
 
+  //TODO: extract scores and stats data
   const onFileSubmit = async (data) => {
     setModelId(data['file_id'])
     setFeatures(data['features'])
@@ -236,8 +282,27 @@ function App()
     console.log(SwitchTextString)
   }
 
+  const deleteModelFromModelsData = (modelIdToDelete) => {
+    const newModelsData = modelsData.filter(modelData => modelData['id'] !== modelIdToDelete)
+    console.log(newModelsData)
+    setModelsData(newModelsData)
+  }
+
+  const onModelSelection = (modelId, features) => {
+    setFeatures(features)
+    setModelId(modelId)
+    //TODO: goto step3 in stepper!
+
+    executeScroll()
+  }
+
+  const handleModelDelete = (modelIdToDelete) => {
+    deleteModelFromModelsData(modelIdToDelete)
+    deleteModelFromDatabase(uid, modelIdToDelete)
+  }
+
   const startRef = useRef(null)
-  const executeUploadScroll = () => scrollToRef(startRef)
+  const executeScroll = () => scrollToRef(startRef)
 
   const testButtonClick = async () => {
     const url = 'models-data/1'
@@ -256,11 +321,20 @@ function App()
           user={user} 
           handleLogin={onLogin} 
           handleLogout={onLogout}
-          handleStartClick={executeUploadScroll}
+          handleStartClick={executeScroll}
         />
         <br/><br/><br/><br/><br/>
         <About user={user}/>
-        <button onClick={testButtonClick}>Press</button>
+        <button onClick={testButtonClick}>Test</button>
+        <br/>
+        {modelsData? 
+          <ModelsCards 
+            modelsData={modelsData}
+            onModelSelection={onModelSelection}
+            handleModelDelete={handleModelDelete}
+          /> 
+        : null}
+          <br/>
 
       </Container>
 
@@ -290,7 +364,7 @@ function App()
                 uid={uid}
                 classifyingType={classifyingType}
                 features={features}
-                onPredictFormSumbit={onPredictFormSumbit}
+                onPredictFormSubmit={onPredictFormSubmit}
                 onPredictFileSubmit={onPredictFileSubmit}
                 modelId={modelId}
               />}
