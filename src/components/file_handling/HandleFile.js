@@ -5,7 +5,7 @@ import UploadFile from './UploadFile'
 import ExampleButton from '../show_example/ExampleButton'
 import Container from '@mui/material/Container';
 
-const HandleFile = ({uid, onFileSubmit, handleSwitch, TextString, FeaturesString, classifyingType, firstColor, secondColor, themeColor}) => {
+const HandleFile = ({uid, onFileSubmit, handleSwitch, switchOn, disableSwitch, TextString, FeaturesString, classifyingType, TextClassificationColor, FeaturesClassificationColor, themeColor}) => {
     return (
         <Container maxWidth='md' sx={{width: "90%"}}>
             <p style={{fontFamily: "Calibri light", fontSize: "1.5rem", color: "#bdbdbd", paddingLeft: "0.5rem", textDecoration: "underline"}}>
@@ -15,8 +15,10 @@ const HandleFile = ({uid, onFileSubmit, handleSwitch, TextString, FeaturesString
                 leftSwitchText={TextString}
                 rightSwitchText={FeaturesString}
                 onSwitch={handleSwitch}
-                firstColor={firstColor}
-                secondColor={secondColor}
+                switchOn={switchOn}
+                disableSwitch={disableSwitch}
+                TextClassificationColor={TextClassificationColor}
+                FeaturesClassificationColor={FeaturesClassificationColor}
             />
             
             <div style={{color: themeColor, fontSize: '1.3rem'}}>

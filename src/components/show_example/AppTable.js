@@ -14,7 +14,7 @@ const AppTable = ({features, items}) => {
 
     return (
         <div>
-            <Table 
+            <Table responsive
                 className="table" 
                 bordered 
                 hover 

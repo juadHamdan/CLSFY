@@ -30,6 +30,7 @@ const HandleTextDataToPredict = ({onSubmit}) => {
         //maxWidth='md' sx={{width: "90%"}}
         <Container sx={{textAlign: "center"}}> 
             <TextField
+                sx={{backgroungColor: 'red'}}
                 focused
                 error = {error}
                 multiline

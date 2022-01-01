@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import ExampleButton from '../show_example/ExampleButton'
 import ClassModal from './ClassModal'
 
-const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmit, onPredictFileSubmit, modelId}) => {
+const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFormSubmit, onPredictFileSubmit, modelId}) => {
     const [classPrediction, setClassPrediction] = React.useState(null)
     const [showClassPrediction, setShowClassPrediction] = React.useState(false)
 
@@ -25,7 +25,6 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
             setClassPrediction(res.data["class"])
             setShowClassPrediction(true)
             onPredictFormSubmit(classPrediction)
-            console.log(classPrediction)
           } 
           catch (err) 
           {
@@ -88,7 +87,7 @@ const HandleDataToPredict = ({uid, classifyingType, features, onPredictFormSubmi
                     You Can Enter Features To Predict The Class
                     <hr/>
                     <HandleFeaturesDataToPredict 
-                        features={features} 
+                        featuresLabels={featuresLabels} 
                         onSubmit={handleFormSubmit}
                     />
                     <hr/>

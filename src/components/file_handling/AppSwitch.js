@@ -8,39 +8,21 @@ import Typography from "@mui/material/Typography";
 import Container from '@mui/material/Container';
 
 
-const AppSwitch = ({leftSwitchText, rightSwitchText, onSwitch, firstColor, secondColor}) => {
-  const [switchOn, setSwitchOn] = React.useState(false) //init as unchecked
-
-
-  const handleSwitchClick = () => {
-    setSwitchOn(!switchOn)
-    if(!switchOn)
-      onSwitch(rightSwitchText)
-    else
-      onSwitch(leftSwitchText)
-  }
-
+const AppSwitch = ({leftSwitchText, rightSwitchText, onSwitch, switchOn, disableSwitch, TextClassificationColor, FeaturesClassificationColor}) => {
     return (
-        <div>
-          <Container>
-            <FormGroup>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Typography sx={{color: firstColor}}>{leftSwitchText}</Typography>
-                <FormControlLabel
-                  onClick={handleSwitchClick}
-                  control=
-                  {
-                  <MySwitch 
-                    sx={{ m: 1, textAlign: "center"}} 
-                  />
-                  }
-                  label=""
-                />
-                <Typography sx={{color: secondColor}}>{rightSwitchText}</Typography>
-              </Stack>
-            </FormGroup>
-          </Container>
-        </div>
+        <Container>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography sx={{color: TextClassificationColor}}>{leftSwitchText}</Typography>
+            {disableSwitch} {switchOn === true}
+            <MySwitch 
+                disabled={disableSwitch}
+                defaultChecked={disableSwitch && switchOn}
+                sx={{ m: 1, textAlign: "center"}} 
+                onClick={onSwitch}
+              />
+            <Typography sx={{color: FeaturesClassificationColor}}>{rightSwitchText}</Typography>
+          </Stack>
+        </Container>
       );
 }
 

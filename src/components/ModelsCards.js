@@ -34,9 +34,7 @@ const ModelsCards = ({modelsData, onModelSelection, handleModelDelete}) => {
             {modelsData.map((modelData, idx) => (
                 <Col key={idx}>
                     <ModelCard
-                        fileName={modelData['file_name']} 
-                        dataTime={modelData['datetime']} 
-                        featuresNames={modelData['features_names']}
+                        modelData={modelData}
                         onClick={() => handleModelSelection(modelData['id'], modelData['features_names'])}
                         handleDelete={() => handleDeleteConfirmation(modelData['id'])}
                     />

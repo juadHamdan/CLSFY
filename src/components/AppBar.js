@@ -24,29 +24,30 @@ const LogoutText = 'Logout'
 const pages = [StartText, LoginText];
 const settings = [LogoutText];
 
-const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
+const AppNavBar = ({handleHomeClick, handleStartClick, handleLogin, handleLogout, user}) => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+        setAnchorElNav(event.currentTarget);
     };
+
     const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+        setAnchorElNav(null);
     };
 
     const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+        setAnchorElUser(null);
     };
 
     const onLoginSuccess = () => {
-    setShowLoginModal(false)
+        setShowLoginModal(false)
     }
 
     const handleLogoutClick = () => {
@@ -62,10 +63,8 @@ const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
         handleStartClick();
     else if(itemClickedTextLowered === LoginText.toLowerCase())
         setShowLoginModal(true)
+    handleCloseNavMenu()
   };
-
-
-
 
   return (
       <>
@@ -127,7 +126,7 @@ const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
 
                 <div style={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                     <Button>
-                        <img onClick={() => window.scroll(0, 0)} src="img/CLSFYlogo.png" alt="logo" height="90rem" width="160rem"/>
+                        <img onClick={handleHomeClick} src="img/CLSFYlogo.png" alt="logo" height="90rem" width="160rem"/>
                     </Button>
                 </div>
 
@@ -150,7 +149,7 @@ const AppNavBar = ({handleStartClick, handleLogin, handleLogout, user}) => {
                     {user && user.photoURL?
                         <Avatar alt="User" src={user.photoURL} />
                     :
-                        <AccountCircleRoundedIcon size="large"/>
+                        <AccountCircleRoundedIcon fontSize="large"/>
                     }
                     </IconButton>
                     <Menu

@@ -5,16 +5,14 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
 import Check from '@mui/icons-material/Check';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import Grid from '@mui/material/Grid';
 
 const steps = ['Upload Excel File', 'Scores & Statistics', 'Predict New Data'];
 
-const AppStepper = ({firstStepComponent, secondStepComponent, thirdStepComponent}) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+const AppStepper = ({activeStep, setActiveStep, firstStepComponent, secondStepComponent, thirdStepComponent}) => {
   const [skipped, setSkipped] = React.useState(new Set());
 
   const isStepSkipped = (step) => {
@@ -67,34 +65,37 @@ const AppStepper = ({firstStepComponent, secondStepComponent, thirdStepComponent
             {activeStep === 2? thirdStepComponent : null}
             <hr/>
 
-
-          <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-            <Button
-              color="inherit"
-              variant="contained"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}> 
-              <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Back</Typography>
-            </Button>
-
-            <Box sx={{ flex: '1 1 auto' }} />
-
-            {activeStep === steps.length - 1 ? 
-              <Button 
-                onClick={handleReset} 
-                variant="contained" 
-                color="inherit">
-                <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Reset</Typography>
-              </Button>
-            : 
-              <Button 
-                onClick={handleNext} 
-                variant="contained" 
-                color="inherit">
-                <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Next</Typography>
-              </Button>
-            }
+            <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+              <Grid container spacing={1}>
+                <Grid item xs={4} md={2}>
+                  <Button
+                    color="inherit"
+                    variant="contained"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mr: 1 }}> 
+                    <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Back</Typography>
+                  </Button>
+                </Grid>
+                <Grid item xs={4} md={8}></Grid>
+              <Grid item xs={4} md={2}>
+                {activeStep === steps.length - 1 ? 
+                  <Button 
+                    onClick={handleReset} 
+                    variant="contained" 
+                    color="inherit">
+                    <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Reset</Typography>
+                  </Button>
+                : 
+                  <Button 
+                    onClick={handleNext} 
+                    variant="contained" 
+                    color="inherit">
+                    <Typography sx={{color: "#424242", fontSize: '0.8rem'}}>Next</Typography>
+                  </Button>
+                }
+              </Grid>
+            </Grid>
           </Box>
           <hr/>
         </>

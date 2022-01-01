@@ -34,16 +34,16 @@ const Logout = ({show, onHide, onLogoutSuccess}) => {
                 style={modalStyle}
                 onEnter={handleLogout}
                 centered
+                animation={false}
                 >
                 <Modal.Header closeButton>
                     <Modal.Body style={{textAlign: 'center'}}> 
                     {success? 
                     <>Logged Out Successfully </>
                     : 
-                    <> <i class="bi bi-exclamation-circle">Error Occured</i></> }
+                    <> <i className="bi bi-exclamation-circle">{' '}Please login</i></> }
                     </Modal.Body>
                 </Modal.Header>
-                <Modal.Footer/>
             </Modal>
         </div>
     )

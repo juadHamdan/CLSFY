@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert'
-import ProgressBar from 'react-bootstrap/ProgressBar'
-import Spinner from 'react-bootstrap/Spinner'
-//import Button from 'react-bootstrap/Button'
 import LinearProgress from '@mui/material/LinearProgress'
 import CircularProgress from '@mui/material/CircularProgress'
-import Fab from '@mui/material/Fab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import UploadRoundedIcon from '@mui/icons-material/UploadRounded';
@@ -38,10 +34,8 @@ const UploadFile = ({url, onSubmit, successMessage, awaitMessage}) => {
   };
 
   const handleSubmit = async e => {
-    //const userType = "Anonymous"
     e.preventDefault();
     const formData = new FormData();
-    //formData.append('userType', userType)
     formData.append('file', file);
 
     setShowSpinner(true)

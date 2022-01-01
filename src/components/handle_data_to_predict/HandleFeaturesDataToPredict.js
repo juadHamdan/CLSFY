@@ -6,16 +6,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Alert from 'react-bootstrap/Alert'
 
-const HandleFeaturesDataToPredict = ({features, onSubmit}) => {
+const HandleFeaturesDataToPredict = ({featuresLabels, onSubmit}) => {
     const [featuersValuesDict] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
     const [error, setError] = useState(false)
 
     const handleSubmit = () => {
-        console.log(features.length)
-        console.log(Object.keys(featuersValuesDict).length)
-
-        if (features.length > Object.keys(featuersValuesDict).length)
+        if (featuresLabels.length > Object.keys(featuersValuesDict).length)
         {
             console.log("Error")
             setError(true)
@@ -44,12 +41,12 @@ const HandleFeaturesDataToPredict = ({features, onSubmit}) => {
              : null}
 
             <Grid sx={{textAlign: "center"}} container spacing={1}>
-                {features.map((feature, index) => 
+                {featuresLabels.map((featureLabel, index) => 
                     <Grid key={index} item xs={2}>
                         <TextField 
                             focused
                             error = {error}
-                            label={feature}
+                            label={featureLabel}
                             onChange={handleFeatureFieldChange}/>
                     </Grid>
                 )}
