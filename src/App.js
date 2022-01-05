@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import { TextClassificationColor, TextString, FeaturesClassificationColor, FeaturesString } from './constants/Global'
 import AppBar from'./components/AppBar'
 import About from'./components/About'
 import AppStepper from'./components/AppStepper'
@@ -11,19 +12,13 @@ import AppStepper from'./components/AppStepper'
 import HandleFile from'./components/file_handling/HandleFile'
 import ModelsCards from'./components/ModelsCards'
 import ScoresAndStats from'./components/scores_and_stats/ScoresAndStats'
-import HandleDataToPredict from'./components/handle_data_to_predict/HandleDataToPredict'
+import HandleDataToPredict from './components/handle_data_to_predict/HandleDataToPredict'
+import BackdropProgress from './components/BackdropProgress'
 
 import Container from '@mui/material/Container';
 import { Snackbar } from '@mui/material';
 
-const TextString = "Text"
-const FeaturesString = "Features"
-
-const TextClassificationColor = "#ffcc80"
-const FeaturesClassificationColor = "#80cbc4"
-
 const anonymousString = "Anonymous"
-const signedString = "Signed"
 
 const uploadStep = 0
 const reportStep = 1
@@ -38,14 +33,15 @@ function App()
   const [classifyingType, setClassifyingType] = useState(TextString)
   const [report, setReport] = useState({})
   const [user, setUser] = useState(null)
-  const [userType, setUserType] = useState(anonymousString)
+  //const [userType, setUserType] = useState(anonymousString)
   const [uid, setUid] = useState(uuidv4()) //generate unique id for anonymous user
   const [featuresLabels, setFeaturesLabels] = useState([])
   const [modelId, setModelId] = useState(null)
-  const [modelsData, setModelsData] = useState(null)
+  const [modelsData, setModelsData] = useState([])
   const [message, setMessage] = useState(null)
   const [switchOn, setSwitchOn] = useState(false)
   const [disableSwitch, setDisabledSwitch] = useState(false)
+  const [showBackdropProgress, setShowBackdropProgress] = useState(false)
 
   const deleteModelFromDatabase = async (uid, modelIdToDelete) => {
     const url = 'model/' + uid
@@ -58,6 +54,7 @@ function App()
             }
         });
         console.log(res.data)
+        setMessage('Model deleted')
       } 
       catch (err) 
       {
@@ -83,9 +80,11 @@ function App()
 
   const onLogin = async (userFromLogin) => {
     setUser(userFromLogin)
-    setUserType(signedString)
+    //setUserType(signedString)
     setUid(userFromLogin.uid)
-    fetchModelsData(userFromLogin.uid)
+    setShowBackdropProgress(true)
+    await fetchModelsData(userFromLogin.uid)
+    setShowBackdropProgress(false)
   }
 
   const onLogout = () => {
@@ -95,8 +94,6 @@ function App()
 
   const onPredictFormSubmit = async (predictedClass) => {
     console.log(predictedClass)
-    //predictFeatures(dataToPredict)
-    //send to 
   }
 
   const onPredictFileSubmit = (predictedClass) => {
@@ -107,20 +104,22 @@ function App()
     setDisabledSwitch(true)
     setActiveStep(reportStep)
     setModelId(data['file_id'])
-    console.log(data['report'])
-    const dataReport = data['report']
-    console.log(typeof dataReport)
-    setReport(dataReport)
+    setReport(data['report'])
     setFeaturesLabels(data['report']['features_labels'])
-    setMessage('Trained model saved')
+    setMessage('Trained model saved.')
   }
 
-  const handleSwitch = (SwitchTextString) => {
-    setClassifyingType(SwitchTextString)
+  const handleSwitch = () => {
     if(!switchOn)
+    {
+      setClassifyingType(FeaturesString)
       setThemeColor(FeaturesClassificationColor)
+    }
     else
+    {
+      setClassifyingType(TextString)
       setThemeColor(TextClassificationColor)
+    }
     setSwitchOn(!switchOn)
   }
 
@@ -151,12 +150,14 @@ function App()
   const startRef = useRef(null)
   const executeScrollStart = () => scrollToRef(startRef)
 
-  const testButtonClick = () => {
-    setMessage('Scores & Stats updated')
-  }
-
   return ( 
     <div style={{fontFamily: 'Calibri light', fontSize: '1.25rem'}}>
+      <BackdropProgress 
+        show={showBackdropProgress} 
+        text={'Checking For Saved Models...'}
+      />
+
+
       <Snackbar
         open={message}
         autoHideDuration={6000}
@@ -174,7 +175,6 @@ function App()
         />
         <div style={{ height: '10rem' }} />
         <About user={user}/>
-        <button onClick={testButtonClick}>Test</button>
         <br/>
         {modelsData?
           <>
@@ -204,10 +204,6 @@ function App()
                 disableSwitch={disableSwitch}
                 classifyingType={classifyingType}
                 themeColor={themeColor}
-                TextClassificationColor={TextClassificationColor}
-                FeaturesClassificationColor={FeaturesClassificationColor}
-                TextString={TextString}
-                FeaturesString={FeaturesString}
               />}
             secondStepComponent={
               <ScoresAndStats 

@@ -116,21 +116,20 @@ def predict_features(uid):
 @app.route('/models-data/<uid>', methods=['GET'])
 def get_models(uid):
     collection = SignedUsersModels
-    results = collection.find({'_id': uid})
+    result = findUserFromDatabase(collection, uid)
+    print(result)
     #if len(list(results)) == 0:
      #  raise NotFound("No models for this user.")
 
     modelsData = []
-    modelData = {}
-    for result in results:
-        files = result['files']
-        for file_ in files:
-            modelData['id'] = str(file_['_id'])
-            modelData['file_name'] = file_['file_name']
-            modelData['date_time'] = file_['date_time']
-            modelData['report'] = file_['report']
-
-            modelsData.append(modelData)
+    files = result['files']
+    for file_ in files:
+        modelData = {}
+        modelData['id'] = str(file_['_id'])
+        modelData['file_name'] = file_['file_name']
+        modelData['date_time'] = file_['date_time']
+        modelData['report'] = file_['report']
+        modelsData.append(modelData)
     
     return {'models_data': modelsData}
 
@@ -182,7 +181,10 @@ def pushFileObjectToDatabase(collection, fileObject, uid):
             }
     )
 
-def findileObjectFromDatabase(collection, fileObject, uid):
+def findUserFromDatabase(collection, uid):
+    return collection.find_one({'_id': uid})
+
+def findFileObjectFromDatabase(collection, fileObject, uid):
     return collection.find_one(
         {'_id': uid}, {'files': {"$elemMatch": {'_id': fileId}}}
     )

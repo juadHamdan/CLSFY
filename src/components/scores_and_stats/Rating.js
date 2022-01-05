@@ -1,4 +1,3 @@
-import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 
 const MyRating = ({value}) => {

@@ -1,10 +1,9 @@
 import React from 'react'
 import AppTableModal from '../show_example/AppTableModal'
-import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
-const ExampleButton = ({buttonText, tableTitle, tableFeatures, tableItems}) => {
+const ExampleButton = ({buttonText, tableTitle, tableFeatures, tableItems, tableAdditionalText}) => {
     const [showModalTable, setShowModalTable] = React.useState(false)
     return (
         <>
@@ -24,6 +23,7 @@ const ExampleButton = ({buttonText, tableTitle, tableFeatures, tableItems}) => {
                 title={tableTitle}
                 features={tableFeatures} 
                 items={tableItems}
+                additionalText={tableAdditionalText}
             />
         </>
     )

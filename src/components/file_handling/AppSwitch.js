@@ -1,18 +1,17 @@
 import * as React from "react";
+import { TextClassificationColor, FeaturesClassificationColor, ColorContentBottom } from '../../constants/Global'
 import { styled } from "@mui/material/styles";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Container from '@mui/material/Container';
 
 
-const AppSwitch = ({leftSwitchText, rightSwitchText, onSwitch, switchOn, disableSwitch, TextClassificationColor, FeaturesClassificationColor}) => {
+const AppSwitch = ({leftSwitchText, rightSwitchText, onSwitch, switchOn, disableSwitch}) => {
     return (
         <Container>
           <Stack direction="row" spacing={1} alignItems="center">
-            <Typography sx={{color: TextClassificationColor}}>{leftSwitchText}</Typography>
+            <Typography sx={{color: TextClassificationColor, fontWeight: 'bold'}}>{leftSwitchText}</Typography>
             {disableSwitch} {switchOn === true}
             <MySwitch 
                 disabled={disableSwitch}
@@ -20,7 +19,7 @@ const AppSwitch = ({leftSwitchText, rightSwitchText, onSwitch, switchOn, disable
                 sx={{ m: 1, textAlign: "center"}} 
                 onClick={onSwitch}
               />
-            <Typography sx={{color: FeaturesClassificationColor}}>{rightSwitchText}</Typography>
+            <Typography sx={{color: FeaturesClassificationColor, fontWeight: 'bold'}}>{rightSwitchText}</Typography>
           </Stack>
         </Container>
       );
@@ -66,11 +65,11 @@ const MySwitch = styled((props) => (
     boxSizing: "border-box",
     width: 22,
     height: 22,
-    backgroundColor: "#363D3F"
+    backgroundColor: ColorContentBottom
   },
   "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    backgroundColor: "#ffcc80",
+    backgroundColor: TextClassificationColor,
     opacity: 1,
     transition: theme.transitions.create(["background-color"], {
       duration: 500

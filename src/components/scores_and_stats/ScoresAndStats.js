@@ -4,15 +4,15 @@ import Container from '@mui/material/Container';
 
 function ScoresAndStats({report}) {
     return (
-        <Container maxWidth='lg' sx={{width: "90%"}}>
+        <Container fixed sx={{width: "90%"}}>
                 <nobr style={{fontSize: '1.75rem'}}>Model accuracy  </nobr>
                 <Rating value={report['accuracy']? (report['accuracy'] * 5) : 0}/> {' '}
                 <nobr style={{fontSize: '0.75rem', verticalAlign: 'middle'}}>({report['accuracy']?? '0'})</nobr>
                 <p style={{fontSize: '0.75rem'}}>* Accuracy may vary from classification to classification.</p>
                 <hr/>
-                Classes Scores: |{' '}
+                Classes Scores: <br/>
                 {report['classes_scores']? 
-                    report['classes_scores'].map((classScore, index) => <nobr key={index}>{classScore}{' | '}</nobr>)
+                    report['classes_scores'].map((classScore, index) => <span key={index}><span><strong>{classScore}</strong></span><br/></span>)
                 : null}
                 <p style={{fontSize: '0.75rem'}}>* In case of class with low score {' ->'} more data of this label needed.</p>
                 <hr/>

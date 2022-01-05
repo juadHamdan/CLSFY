@@ -74,7 +74,6 @@ const UploadFile = ({url, onSubmit, successMessage, awaitMessage}) => {
       else if (err.response.status === 409)
       {
         console.log(err.response.data)
-        const htmlString = err.response.data
         setMessage(err.response.statusText + " Model of file name already exists")
         setMessageVariant('warning')
       }
@@ -95,17 +94,17 @@ const UploadFile = ({url, onSubmit, successMessage, awaitMessage}) => {
               {message} {showSpinner?<CircularProgress size="10" color="warning"/>:null}
             </Alert>
              : null}
-            {uploadPercentage === 100 ? <Alert variant='info' >{awaitMessage}</Alert> : null}
+            {uploadPercentage === 100 ? <Alert variant='secondary' >{awaitMessage}</Alert> : null}
 
             <form onSubmit={onSubmit} style={{textAlign:'center'}} >
             <div className='custom-file'>
                 <input
-                type='file'
-                color='black'
-                className='custom-file-input'
-                size="lg"
-                id='customFile'
-                onChange={onChange}
+                  type='file'
+                  color='black'
+                  className='custom-file-input'
+                  size="lg"
+                  id='customFile'
+                  onChange={onChange}
                 />
                 <label style={{borderRadius: '1.5rem', borderColor: "inherit", color: "inherit", backgroundColor: "inherit"}} className='custom-file-label' htmlFor='customFile'>
                   {filename} <FindInPageRoundedIcon/>

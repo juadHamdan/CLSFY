@@ -10,16 +10,13 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn import metrics
 from sklearn.feature_selection import SelectKBest, chi2
 import pickle
-import nltk
-from nltk.corpus import stopwords
+from text_preprocess import textPreprocessing
 
-nltk.download('wordnet')
-nltk.download('stopwords')
 
 TrainingPercentage = 0.75
 TestingPercentage = 1 - TrainingPercentage
 
-NumOfBestFeatures = 5  # num of features in text data is twice the size of NumOfBestFeatures
+NumOfBestFeatures = 5
 
 
 def classifyText(data):
@@ -32,13 +29,13 @@ def classifyText(data):
 
     Returns
     -------
-    scores & statistics :
+    trainedModel, modelFeatureVectors, modelTfidfTransformer, classesToTargetNamesDict, report
     """
     numpyData = data.to_numpy()
     np.random.shuffle(numpyData)
 
-    text = numpyData[:, 1]
-    classes = numpyData[:, 2]
+    text = numpyData[:, 0]
+    classes = numpyData[:, 1]
     labelEncoder = LabelEncoder()
     classes = transformStrClassesLabelsToFloat(labelEncoder, classes)  # typ object to type str
 
@@ -74,7 +71,7 @@ def classifyText(data):
     for targetName in targetNames:
         classesScores.append("{}: {}".format(targetName, report[targetName]['f1-score']))
 
-    transformedTargetNames = list(np.unique(classes))
+    transformedTargetNames = list(map(str, np.unique(classes)))
     classesToTargetNamesDict = dict(zip(transformedTargetNames, targetNames))
 
     ch2 = SelectKBest(chi2, k=NumOfBestFeatures)
@@ -83,7 +80,7 @@ def classifyText(data):
 
     report = {'accuracy': accuracy, 'classes_scores': classesScores, 'best_features_labels': bestFeaturesLabels, 'classification_type': "Text"}
 
-    return trainedModel, modelFeatureVectors, modelTfidfTransformer, report
+    return trainedModel, modelFeatureVectors, modelTfidfTransformer, classesToTargetNamesDict, report
 
 
 def classifyFeatures(data):
@@ -96,7 +93,7 @@ def classifyFeatures(data):
 
      Returns
      -------
-     scores & statistics :
+     trainedModel, classesToTargetNamesDict, report
      """
     allFeatures = []
     for col in data.columns:
@@ -110,7 +107,7 @@ def classifyFeatures(data):
     numOfColumns = numpyData.shape[1]
 
     classesIndex = numOfColumns - 1
-    features = numpyData[:, 1: classesIndex]
+    features = numpyData[:, 0: classesIndex]
     classes = numpyData[:, classesIndex]
     labelEncoder = LabelEncoder()
     classes = transformStrClassesLabelsToFloat(labelEncoder, classes)  # typ object to type str
@@ -171,42 +168,6 @@ def getBestFeatures(X, y, featuresLabels):
     return bestFeatures
 
 
-def getNormalizedTokens(tokens):
-    stemmer = nltk.stem.PorterStemmer()  # stemming, get to the root form of the word
-    lemmatizer = nltk.stem.WordNetLemmatizer()  # lemmatization, get the base dictionary form of a word (the lemma)
-    return (lemmatizer.lemmatize(stemmer.stem(token)) for token in tokens)
-
-
-def removeStopWordsFromTokens(tokens):
-    stopWords = set(stopwords.words('english'))
-    for token in tokens:
-        if token.lower() in stopWords or "'" in token:
-            tokens.remove(token)
-    return tokens
-
-
-def tokenizeText(text):
-    tokenizer = nltk.tokenize.TreebankWordTokenizer()
-    return tokenizer.tokenize(text)
-
-
-def textPreprocessing(text):
-    """
-     Remove punctuation marks from a text,
-     Remove english stop words,
-     Normalize each word (stemming + lemmatization)
-
-     Parameters
-     ----------
-     text: string
-
-     Returns
-     -------
-     processed text : string
-     """
-    return " ".join(getNormalizedTokens(removeStopWordsFromTokens(tokenizeText(re.sub(".,!?", "", text)))))
-
-
 def preprocessText(text):
     for i in range(1, len(text)):
         text[i] = textPreprocessing(text[i])
@@ -248,9 +209,9 @@ def predictText(model, modelFeatureVectors, modelTfidfTransformer, classesToTarg
     X_new_counts = count_vect.transform([text])
     textFeatures = tfidf_transformer.transform(X_new_counts)
     transformedClass = clf.predict(textFeatures)
-    classTargeName = classesToTargetNamesDict[transformedClass[0]]
+    classTargetName = classesToTargetNamesDict[str(int(transformedClass[0]))]
 
-    return classTargeName
+    return classTargetName
 
 
 def predictFeaturesDict(model, classesToTargetNamesDict, featuresDict):
@@ -262,6 +223,6 @@ def predictFeaturesDict(model, classesToTargetNamesDict, featuresDict):
 
     featuresAs2DArray = np.array([features])
     transformedClass = clf.predict(featuresAs2DArray)
-    classTargeName = classesToTargetNamesDict[transformedClass[0]]
+    classTargetName = classesToTargetNamesDict[transformedClass[0]]
 
-    return classTargeName
+    return classTargetName

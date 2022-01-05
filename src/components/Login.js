@@ -1,5 +1,4 @@
 import firebase from './firebase-config'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
   

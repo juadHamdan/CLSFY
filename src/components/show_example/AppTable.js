@@ -1,12 +1,11 @@
 import Table from 'react-bootstrap/Table'
 
-const AppTable = ({features, items}) => {
+const AppTable = ({features, items, additionalText=''}) => {
 
     const renderItem = (item, index) => {
         //item = [prop1, prps2, ...]
         return(
           <tr key={index}>
-            <th> {index + 1}</th>
             {item.map((itemProps, index) => <th key={index}> {itemProps}</th>)}
           </tr>
         )
@@ -21,7 +20,6 @@ const AppTable = ({features, items}) => {
                 size="sm" >
                 <thead>
                     <tr>
-                        <th></th>
                         {features.map((feature, index) => <th key={index}> {feature}</th>)}
                     </tr>
                 </thead>
@@ -29,6 +27,7 @@ const AppTable = ({features, items}) => {
                     {items.map(renderItem)}
                 </tbody>
             </Table>
+            {additionalText}
         </div>
     )
 }

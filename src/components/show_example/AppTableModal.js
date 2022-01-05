@@ -1,7 +1,7 @@
 import AppTable from './AppTable'
 import Modal from 'react-bootstrap/Modal'
 
-const AppTableModal = ({show, onHide, title, features, items}) => {
+const AppTableModal = ({show, onHide, title, features, items, additionalText}) => {
     return (
         <div>
             <Modal 
@@ -20,6 +20,7 @@ const AppTableModal = ({show, onHide, title, features, items}) => {
                         <AppTable 
                             features={features}
                             items={items}
+                            additionalText={additionalText}
                         />
 
 
