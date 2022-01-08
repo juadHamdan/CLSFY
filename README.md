@@ -1,21 +1,19 @@
 # CLSFY
 
-### CLSFY's goal is to make machine learning and artificial intelligence classifying algorithms
-### accessible without knowing how to code.
-<hr/>
+### CLSFY's goal is to make machine learning and artificial intelligence classifying algorithms accessible without knowing how to code.
 
 | Upload a file with data of classification task that needs an algoithm's help |<br/>
 | Build and save a model |<br/>
 | View model scores & statistics |<br/>
 | Make informed, useful predictions |<br/>
 <hr/>
-### In future versions:
+### In future versions
 ```
- - Support for multiple predictions via excel file upload.
- - Confusion matrix in the Scores & Stats section
- - File upload from Dropbox, Google Drive
+ - Support for multiple predictions via excel file upload.<br/>
+ - Confusion matrix in the Scores & Stats section<br/>
+ - File upload from Dropbox, Google Drive<br/>
 ```
-
+<hr/>
 ### Usage
 #### Run React dev server (http://localhost:3000)
 ```
