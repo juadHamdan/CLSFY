@@ -4,9 +4,10 @@ CLSFY's goal is to make machine learning and artificial intelligence classifying
 accessible without knowing how to code.
 <hr/>
 
-Upload a file with data of classification task that needs an algoithm's help |
-Build and save a model | View model scores & statistics |
-Make informed, useful predictions
+| Upload a file with data of classification task that needs an algoithm's help |
+| Build and save a model |
+| View model scores & statistics |
+| Make informed, useful predictions |
 
 
 ## Usage
@@ -18,6 +19,10 @@ Make informed, useful predictions
 ```
 .\CLSFY\npm start\api\venv\Scripts\flask run 
 ```
- (the front-End is configured to proxy any requests he doesn't understand into port 5000.)
- <br>
- <br>
+<hr/>
+### In future versions:
+```
+ - Support for multiple predictions via excel file upload.
+ - Confusion matrix in the Scores & Stats section
+ - File upload from Dropbox, Google Drive
+```
