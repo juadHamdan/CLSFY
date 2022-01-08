@@ -7,6 +7,7 @@
 | View model scores & statistics |<br/>
 | Make informed, useful predictions |<br/>
 <hr/>
+
 ### In future versions
 ```
  - Support for multiple predictions via excel file upload.<br/>
@@ -14,11 +15,14 @@
  - File upload from Dropbox, Google Drive<br/>
 ```
 <hr/>
+
 ### Usage
+
 #### Run React dev server (http://localhost:3000)
 ```
 .\CLSFY\npm start
 ```
+
 #### Run the FLASK server (http://localhost:5000) (from a new terminal)
 ```
 .\CLSFY\npm start\api\venv\Scripts\flask run 
