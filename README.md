@@ -8,6 +8,22 @@
 | Make informed, useful predictions |<br/>
 <hr/>
 
+### Demo
+
+![Alt text](https://user-images.githubusercontent.com/64545813/148655522-bdae0d48-8c00-4a7a-881e-f4e70385eea1.png)
+
+### Upload File
+
+![Alt text](https://user-images.githubusercontent.com/64545813/148655650-f481e695-396a-4d99-8b83-ab476e11d00b.png)
+
+### Scores & Statistics
+
+![Alt text](https://user-images.githubusercontent.com/64545813/148655704-284d72fe-b66b-45be-bb69-8799da4b776e.png)
+
+### Predict
+
+![Alt text](https://user-images.githubusercontent.com/64545813/148655762-2550d05e-4533-4393-9a09-51ba767fb984.png)
+
 ### In future versions
 ```
  - Support for multiple predictions via excel file upload.
@@ -29,17 +45,6 @@
 ```
 <hr/>
 
-### Demo
-
-![Alt text](https://user-images.githubusercontent.com/64545813/148655522-bdae0d48-8c00-4a7a-881e-f4e70385eea1.png)
-
-### Upload File
-
-![Alt text](https://user-images.githubusercontent.com/64545813/148655650-f481e695-396a-4d99-8b83-ab476e11d00b.png)
-
-### Scores & Statistics
-
-![Alt text](https://user-images.githubusercontent.com/64545813/148655704-284d72fe-b66b-45be-bb69-8799da4b776e.png)
 
 
 
