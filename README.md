@@ -10,9 +10,9 @@
 
 ### In future versions
 ```
- - Support for multiple predictions via excel file upload.<br/>
- - Confusion matrix in the Scores & Stats section<br/>
- - File upload from Dropbox, Google Drive<br/>
+ - Support for multiple predictions via excel file upload.
+ - Confusion matrix in the Scores & Stats section
+ - File upload from Dropbox, Google Drive
 ```
 <hr/>
 
