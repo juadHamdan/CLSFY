@@ -44,7 +44,7 @@ const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFor
 
     const handleFormSubmit = async (data) => {
         console.log(data)
-        const url = (classifyingType === "Text" ? 'predict-data/' + uid : 'predict-features/' + uid)
+        const url = (classifyingType === "Text" ? 'predict-text/' + uid : 'predict-features/' + uid)
         predict(url, data)
     }
 
@@ -56,7 +56,7 @@ const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFor
 
     return (
             //<div style={{color: themeColor, fontSize: '1.3rem'}}>
-        <Container maxWidth='md' sx={{width: "90%", fontSize: "1rem"}}>
+        <Container fixed sx={{width: "90%", fontSize: "1rem"}}>
             <ClassModal
                 show={showClassPrediction} 
                 onHide={() => setShowClassPrediction(false)} 
@@ -78,7 +78,7 @@ const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFor
                         buttonText={"Show Example"}
                         tableTitle={"File upload example for text classification"}
                         tableFeatures={["Text"]} 
-                        tableItems={[["text1"]]}
+                        tableItems={[["text"]]}
                     />
 
                 </>
@@ -99,7 +99,7 @@ const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFor
                         buttonText={"Show Example"}
                         tableTitle={"File upload example for features classification"}
                         tableFeatures={["Feature 1", "Feature 2", "Feature 3" , "..."]} 
-                        tableItems={[["0", "1", "0", "..."]]}
+                        tableItems={[["0", "8", "120", "..."]]}
                     />
                 </>
             }   

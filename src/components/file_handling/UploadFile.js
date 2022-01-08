@@ -37,7 +37,6 @@ const UploadFile = ({url, onSubmit, successMessage, awaitMessage}) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
-
     setShowSpinner(true)
 
     try {

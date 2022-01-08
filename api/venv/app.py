@@ -1,21 +1,16 @@
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
-import json
-import os
-import io
 import pandas as pd
 import datetime
 from bson.objectid import ObjectId
-
-from sklearn.datasets import fetch_20newsgroups
 from werkzeug.exceptions import BadRequest, InternalServerError, Conflict, NotFound
-from werkzeug.utils import secure_filename
 
 from classify import classifyText, predictText, classifyFeatures, predictFeaturesDict
 import pymongo
 
 ALLOWED_EXTENSIONS = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
 
-client = pymongo.MongoClient("mongodb+srv://JoadHamdan:Joe19973614@cluster0.fwxod.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(
+    "mongodb+srv://JoadHamdan:Joe19973614@cluster0.fwxod.mongodb.net/?retryWrites=true&w=majority")
 db = client.mydb
 
 SignedUsersModels = db["signed-users-models"]
@@ -26,17 +21,21 @@ app = Flask(__name__)
 
 @app.route('/classify-text/<uid>', methods=['POST'])
 def classify_text(uid):
-    collection = getCollectionByUserType(userType)
-    checkFileAllowed(request)
-    fileName = request.files['file'].filename
+    # collection = getCollectionByUserType(userType)
+    collection = SignedUsersModels
+    file_ = checkFileAllowed(request)
+    fileName = file_.filename
 
-    try: 
+    try:
         data = pd.read_excel(file_)
         trainedModel, modelFeatureVectors, modelTfidfTransformer, classesToTargetNamesDict, report = classifyText(data)
         fileObjectId = ObjectId()
-        fileObject = {'_id': fileObjectId, 'file_name': fileName, 'model': trainedModel, 'feature_vectors': modelFeatureVectors,
-            'tfidf_transformer': modelTfidfTransformer, 'classes_to_target_names_dict': classesToTargetNamesDict, 'report': report, 'date_time': datetime.datetime.now()}
-        
+        fileObject = {'_id': fileObjectId, 'file_name': fileName, 'model': trainedModel,
+                      'feature_vectors': modelFeatureVectors,
+                      'tfidf_transformer': modelTfidfTransformer,
+                      'classes_to_target_names_dict': classesToTargetNamesDict, 'report': report,
+                      'date_time': datetime.datetime.now()}
+
         insertFileObjectToDatabase(collection, fileObject, uid)
 
     except pymongo.errors.DuplicateKeyError:
@@ -52,9 +51,10 @@ def predict_text(uid):
 
     reqData = request.get_json()
     fileId = ObjectId(reqData['modelId'])
-    dataToPredict = reqData['dataToPredict']
-    
-    #try: 
+    dataToPredict = reqData['dataToPredict']['Text']
+    print(dataToPredict)
+
+    # try:
     result = findFileObjectFromDatabase(collection, fileId, uid)
     files = result['files']
     file_ = files[0]
@@ -64,30 +64,32 @@ def predict_text(uid):
     classesToTargetNamesDict = file_['classes_to_target_names_dict']
 
     Class = predictText(model, modelFeatureVectors, modelTfidfVectors, classesToTargetNamesDict, dataToPredict)
-    #except:
-     #   raise BadRequest('Wrong uid or object id')
+    # except:
+    #   raise BadRequest('Wrong uid or object id')
     return {"class": Class}
 
 
 @app.route('/classify-features/<uid>', methods=['POST'])
 def classify_features(uid):
-    #check id not none
-    #collection = getCollectionByUserType(userType)
+    # check id not none
+    # collection = getCollectionByUserType(userType)
     collection = SignedUsersModels
-    checkFileAllowed(request)
-    fileName = request.files['file'].filename
+    file_ = checkFileAllowed(request)
+    fileName = file_.filename
 
-    try: 
+    try:
         data = pd.read_excel(file_)
         trainedModel, classesToTargetNamesDict, report = classifyFeatures(data)
         fileObjectId = ObjectId()
-        fileObject = {'_id': fileObjectId, 'file_name': fileName, 'model': trainedModel, 'classes_to_target_names_dict': classesToTargetNamesDict, 'report': report, 'date_time': datetime.datetime.now()}
-        
+        fileObject = {'_id': fileObjectId, 'file_name': fileName, 'model': trainedModel,
+                      'classes_to_target_names_dict': classesToTargetNamesDict, 'report': report,
+                      'date_time': datetime.datetime.now()}
+
         insertFileObjectToDatabase(collection, fileObject, uid)
 
     except pymongo.errors.DuplicateKeyError:
         pushFileObjectToDatabase(collection, fileObject, uid)
-    
+
     return {"report": report, 'file_id': str(fileObjectId)}
 
 
@@ -99,16 +101,16 @@ def predict_features(uid):
     reqData = request.get_json()
     fileId = ObjectId(reqData['modelId'])
     dataToPredict = reqData['dataToPredict']
-    
-    #try: 
+
+    # try:
     result = findFileObjectFromDatabase(collection, fileId, uid)
     files = result['files']
     file_ = files[0]
     model = file_['model']
     classesToTargetNamesDict = file_['classes_to_target_names_dict']
     Class = predictFeaturesDict(model, classesToTargetNamesDict, dataToPredict)
-    #except:
-     #   raise BadRequest('Wrong uid or object id')
+    # except:
+    #   raise BadRequest('Wrong uid or object id')
     return {"class": Class}
 
 
@@ -117,20 +119,20 @@ def predict_features(uid):
 def get_models(uid):
     collection = SignedUsersModels
     result = findUserFromDatabase(collection, uid)
-    print(result)
-    #if len(list(results)) == 0:
-     #  raise NotFound("No models for this user.")
 
     modelsData = []
     files = result['files']
+
     for file_ in files:
         modelData = {}
         modelData['id'] = str(file_['_id'])
         modelData['file_name'] = file_['file_name']
         modelData['date_time'] = file_['date_time']
         modelData['report'] = file_['report']
+
         modelsData.append(modelData)
-    
+    print(modelsData)
+
     return {'models_data': modelsData}
 
 
@@ -141,15 +143,16 @@ def delete_model(uid):
     fileIdToDelete = ObjectId(reqData['modelIdToDelete'])
 
     deleteFileObjectFromDatabase(collection, fileIdToDelete, uid)
-    
+
     return "OK"
+
 
 def getCollectionByUserType(userType):
     if userType == 'Anonymous':
         collection = AnonymousUsersModels
     elif userType == 'Signed':
         collection = SignedUsersModels
-    else: 
+    else:
         raise BadRequest('Request data should contain user id. e.g. Anonymous / Signed')
 
 
@@ -159,44 +162,49 @@ def checkFileAllowed(request):
         raise BadRequest('Empty file')
     if not allowed_file(file_.filename):
         raise BadRequest(f'Only {ALLOWED_EXTENSIONS} files allowed')
+    return file_
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
-#database handling
+# database handling
 def insertFileObjectToDatabase(collection, fileObject, uid):
     collection.insert_one(
-        {'_id' : uid, 
-            'files': [fileObject]
-        }
+        {'_id': uid,
+         'files': [fileObject]
+         }
     )
+
 
 def pushFileObjectToDatabase(collection, fileObject, uid):
     collection.update_one(
-        {'_id': uid}, 
-            {"$push":  
-                {'files': fileObject}
-            }
+        {'_id': uid},
+        {"$push":
+             {'files': fileObject}
+         }
     )
+
 
 def findUserFromDatabase(collection, uid):
     return collection.find_one({'_id': uid})
 
-def findFileObjectFromDatabase(collection, fileObject, uid):
+
+def findFileObjectFromDatabase(collection, fileId, uid):
     return collection.find_one(
         {'_id': uid}, {'files': {"$elemMatch": {'_id': fileId}}}
     )
 
+
 def deleteFileObjectFromDatabase(collection, fileIdToDelete, uid):
     collection.update_one(
-        {'_id': uid}, 
-            {"$pull":  
-                {'files': {'_id': fileIdToDelete}}
-            }
+        {'_id': uid},
+        {"$pull":
+             {'files': {'_id': fileIdToDelete}}
+         }
     )
 
 
 if __name__ == "__main__":
-   app.run(debug=True)
+    app.run(debug=True)

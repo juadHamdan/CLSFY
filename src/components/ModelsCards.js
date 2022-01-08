@@ -8,8 +8,8 @@ const ModelsCards = ({modelsData, onModelSelection, handleModelDelete}) => {
     const [showDeleteConfirmation, setShowDeleteConfirmation] = React.useState(false)
     const [modelIdToDelete, setModelIdToDelete] = React.useState(null)
 
-    const handleModelSelection = (modelId, features) => {
-        onModelSelection(modelId, features)
+    const handleModelSelection = (modelId, features, type) => {
+        onModelSelection(modelId, features, type)
     }
 
     const handleDeleteConfirmation = (modelId) => {
@@ -30,12 +30,12 @@ const ModelsCards = ({modelsData, onModelSelection, handleModelDelete}) => {
                 onDelete={deleteModel}
             />
 
-            <Row xs={1} md={2} lg={3}>
+            <Row xs={1} md={2} lg={2} xl={3}>
             {modelsData.map((modelData, idx) => (
                 <Col key={idx}>
                     <ModelCard
                         modelData={modelData}
-                        onClick={() => handleModelSelection(modelData['id'], modelData['features_names'])}
+                        onClick={() => handleModelSelection(modelData['id'], modelData['report']['features_labels'], modelData['report']['classification_type'])}
                         handleDelete={() => handleDeleteConfirmation(modelData['id'])}
                     />
                 </Col>

@@ -37,7 +37,7 @@ function App()
   const [uid, setUid] = useState(uuidv4()) //generate unique id for anonymous user
   const [featuresLabels, setFeaturesLabels] = useState([])
   const [modelId, setModelId] = useState(null)
-  const [modelsData, setModelsData] = useState([])
+  const [modelsData, setModelsData] = useState(null)
   const [message, setMessage] = useState(null)
   const [switchOn, setSwitchOn] = useState(false)
   const [disableSwitch, setDisabledSwitch] = useState(false)
@@ -69,7 +69,7 @@ function App()
             method: 'get',
             url: url
         });
-        console.log(res.data)
+        console.log("modelsData: ", res.data)
         setModelsData(res.data['models_data'])
       } 
       catch (err) 
@@ -129,8 +129,18 @@ function App()
     setModelsData(newModelsData)
   }
 
-  const onModelSelection = (modelId, features) => {
-    setFeaturesLabels(features)
+  const onModelSelection = (modelId, features, type) => {
+    if(type === TextString)
+    {
+      setClassifyingType(TextString)
+      setThemeColor(TextClassificationColor)
+    }
+    else
+    {
+      setClassifyingType(FeaturesString)
+      setThemeColor(FeaturesClassificationColor)
+      setFeaturesLabels(features)
+    }
     setModelId(modelId)
     setActiveStep(PredictStep)
     executeScrollStart()
@@ -139,6 +149,7 @@ function App()
   const handleModelDelete = (modelIdToDelete) => {
     deleteModelFromModelsData(modelIdToDelete)
     deleteModelFromDatabase(uid, modelIdToDelete)
+    setMessage("Model deleted")
   }
 
   const handleActiveSetChange = (step) => {
@@ -157,13 +168,13 @@ function App()
         text={'Checking For Saved Models...'}
       />
 
-
       <Snackbar
         open={message}
         autoHideDuration={6000}
         onClose={() => setMessage(null)}
         message={message}
       />
+
 
       <Container ref={homeRef} sx={{width: "90%"}}>
         <AppBar
@@ -175,16 +186,19 @@ function App()
         />
         <div style={{ height: '10rem' }} />
         <About user={user}/>
-        <br/>
+        <div style={{ height: '5rem' }} />
         {modelsData?
-          <>
+          <div style={{textAlign: 'center'}}>
+            <strong style={{textAlign: 'center'}}>Predict using saved models</strong>
+            <hr/>
             <ModelsCards 
               modelsData={modelsData}
               onModelSelection={onModelSelection}
               handleModelDelete={handleModelDelete}
             /> 
             <hr/>
-          </>
+            <div style={{ height: '5rem' }} />
+          </div>
         : null}
 
       </Container>

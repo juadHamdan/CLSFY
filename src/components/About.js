@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = ({user}) => {
     return (
-        <div style={{padding: "5rem", textAlign: "center"}}>
+        <div style={{padding: "2rem", textAlign: "center"}}>
             <h3>- About CLSFY -</h3>
             CLSFY's goal is to make machine learning and artificial intelligence classifying algorithms
             accessible without knowing how to code.

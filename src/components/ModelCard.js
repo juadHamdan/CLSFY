@@ -48,9 +48,11 @@ const ModelCard = ({modelData, onClick, handleDelete}) => {
                     <Button 
                         style={{paddingLeft: '4rem', paddingRight: '4rem'}}
                         onClick={onClick}
-                        variant="light">
+                        variant="light"
+                    >
                         <Card.Title>{fileName}</Card.Title>
-                        Classification Type: <strong>{classificationType}</strong>
+                        Classification Type: <strong>{classificationType}</strong>,
+                        <br/>Accuracy:
                         <MyRating value={accuracy * 5} />
                         <hr/>
                         <Card.Subtitle className="mb-2 text-muted">{dateTime}</Card.Subtitle>

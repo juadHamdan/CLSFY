@@ -45,6 +45,7 @@ const HandleFeaturesDataToPredict = ({featuresLabels, onSubmit}) => {
                     <Grid key={index} item xs={2}>
                         <TextField 
                             focused
+                            type="number"
                             error = {error}
                             label={featureLabel}
                             onChange={handleFeatureFieldChange}/>

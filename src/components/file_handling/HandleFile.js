@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 
 const HandleFile = ({uid, onFileSubmit, handleSwitch, switchOn, disableSwitch, classifyingType, themeColor}) => {
     return (
-        <Container maxWidth='md' sx={{width: "90%"}}>
+        <Container fixed sx={{width: "90%"}}>
             <nobr><strong>Choose Classifyier Type</strong></nobr>
             <AppSwitch 
                 leftSwitchText={TextString}
@@ -19,7 +19,7 @@ const HandleFile = ({uid, onFileSubmit, handleSwitch, switchOn, disableSwitch, c
             
             <div style={{color: themeColor, fontSize: '1.3rem'}}>
                 <hr/>
-                Upload Excel file is in the following format:
+                Upload Excel file in the following format:
                 <br/>
                 {classifyingType === FeaturesString?
                 <>
@@ -48,7 +48,7 @@ const HandleFile = ({uid, onFileSubmit, handleSwitch, switchOn, disableSwitch, c
                 }   
                 <hr/>
                 <UploadFile 
-                    url={classifyingType === "Text" ? '/classify-text/' + uid : 'classify-features/' + uid}
+                    url={classifyingType === TextString ? '/classify-text/' + uid : 'classify-features/' + uid}
                     onSubmit={onFileSubmit}
                     successMessage={"Model trained successfully"}
                     awaitMessage={"File uploaded, Training model..."}

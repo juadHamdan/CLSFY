@@ -55,13 +55,17 @@ const AppNavBar = ({handleHomeClick, handleStartClick, handleLogin, handleLogout
 
 
   const handleItemClick = (event) => {
-    let itemClickedTextLowered = event.target.innerText.toLowerCase()
-    console.log(itemClickedTextLowered)
-    if(itemClickedTextLowered === StartText.toLowerCase())
-        handleStartClick();
-    else if(itemClickedTextLowered === LoginText.toLowerCase())
-        setShowLoginModal(true)
     handleCloseNavMenu()
+    let itemClickedTextLowered = event.target.innerText.toLowerCase()
+
+    if(itemClickedTextLowered === StartText.toLowerCase())
+    {
+        handleStartClick();
+    }  
+    else if(itemClickedTextLowered === LoginText.toLowerCase())
+    {
+        setShowLoginModal(true)
+    }
   };
 
   return (
@@ -99,7 +103,7 @@ const AppNavBar = ({handleHomeClick, handleStartClick, handleLogin, handleLogout
                     }}
                     >
                     {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleItemClick}>
+                        <MenuItem key={page} onClick={(e) => handleItemClick(e)}>
                         <Typography variant="button" display="block" gutterBottom textAlign="center">
                             <strong>{page}</strong>
                         </Typography>
@@ -133,7 +137,7 @@ const AppNavBar = ({handleHomeClick, handleStartClick, handleLogin, handleLogout
                     {pages.map((page) => (
                     <Button
                         key={page}
-                        onClick={handleItemClick}
+                        onClick={(e) => handleItemClick(e)}
                         sx={{ fontSize: "0.8rem", paddingLeft: "2rem", paddingRight: "2rem", my: 4, color: 'black', display: 'block' }}
                     >
                         <strong>{page}</strong>

@@ -12,7 +12,7 @@ const ClassModal = ({show, onHide, text}) => {
                 animation={false}
                 >
                     <Modal.Body closeButton>
-                        <Modal.Title style={{textAlign:'center'}}> Class Prediction: {text} </Modal.Title>
+                        <Modal.Title style={{textAlign:'center'}}> Prediction: {text} </Modal.Title>
                     </Modal.Body>
             </Modal>
         </div>

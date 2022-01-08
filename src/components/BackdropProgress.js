@@ -10,8 +10,7 @@ const BackdropProgress = ({show, text}) => {
                 open={show}
             >
                 <CircularProgress color="inherit" />
-                <hr/>
-                {text}
+                <strong>{' '}{text}</strong>
             </Backdrop>
       </div>
     )

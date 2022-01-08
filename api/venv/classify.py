@@ -1,16 +1,13 @@
-import json
-import re
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
 import numpy as np
-import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.preprocessing import LabelEncoder
 from sklearn import metrics
 from sklearn.feature_selection import SelectKBest, chi2
 import pickle
-from text_preprocess import textPreprocessing
+from text_preprocessing import textPreprocessing
 
 
 TrainingPercentage = 0.75
@@ -99,7 +96,7 @@ def classifyFeatures(data):
     for col in data.columns:
         allFeatures.append(col)
 
-    featuresLabels = allFeatures[1:len(allFeatures) - 1]
+    featuresLabels = allFeatures[0:len(allFeatures) - 1]
 
     numpyData = data.to_numpy()
     np.random.shuffle(numpyData)
@@ -119,7 +116,8 @@ def classifyFeatures(data):
     classesToPredict = classesToPredict.astype('float')
     trueClassesToTest = trueClassesToTest.astype('float')
 
-    clf = svm.SVC()
+    # clf = svm.SVC()
+    clf = LogisticRegression(max_iter=200)
     clf.fit(featuresToPredict, classesToPredict)
     trainedModel = pickle.dumps(clf)
 
@@ -137,7 +135,7 @@ def classifyFeatures(data):
     if NumOfBestFeatures <= len(featuresLabels):
         bestFeaturesLabels = getBestFeatures(featuresToPredict, classesToPredict, featuresLabels)
 
-    transformedTargetNames = list(np.unique(classes))
+    transformedTargetNames = list(map(str, np.unique(classes)))
     classesToTargetNamesDict = dict(zip(transformedTargetNames, targetNames))
 
     report = {'accuracy': accuracy, 'classes_scores': classesScores, 'features_labels': featuresLabels,
@@ -223,6 +221,6 @@ def predictFeaturesDict(model, classesToTargetNamesDict, featuresDict):
 
     featuresAs2DArray = np.array([features])
     transformedClass = clf.predict(featuresAs2DArray)
-    classTargetName = classesToTargetNamesDict[transformedClass[0]]
+    classTargetName = classesToTargetNamesDict[str(int(transformedClass[0]))]
 
     return classTargetName
