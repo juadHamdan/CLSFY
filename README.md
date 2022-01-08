@@ -28,8 +28,12 @@
 .\CLSFY\npm start\api\venv\Scripts\flask run 
 ```
 <hr/>
-![image](https://user-images.githubusercontent.com/64545813/148654813-13a620d1-06a9-41b6-a750-3bf6845b27ff.png)
+### Demo
 
-![Alt text](https://user-images.githubusercontent.com/64545813/148655099-fe9d5646-ef27-489a-a650-4b5012262d1a.png)
 ![Alt text](https://user-images.githubusercontent.com/64545813/148655522-bdae0d48-8c00-4a7a-881e-f4e70385eea1.png)
+
+### Upload File
+
+![Alt text](https://user-images.githubusercontent.com/64545813/148655650-f481e695-396a-4d99-8b83-ab476e11d00b.png)
+
 
