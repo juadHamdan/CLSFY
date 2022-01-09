@@ -41,7 +41,7 @@
 
 #### Run the FLASK server (http://localhost:5000) (from a new terminal)
 ```
-.\CLSFY\npm start\api\venv\Scripts\flask run 
+.\CLSFY\api\venv\Scripts\flask run
 ```
 <hr/>
 
