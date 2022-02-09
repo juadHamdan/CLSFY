@@ -10,20 +10,16 @@ const AppTableModal = ({show, onHide, title, features, items, additionalText}) =
                 onHide={onHide}
                 style={modalStyle}
                 centered
-                animation={false}
-                >
+                animation={false}>
                     <Modal.Header closeButton>
                         <Modal.Title> {title} </Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{textAlign:'center'}} >
-
                         <AppTable 
                             features={features}
                             items={items}
                             additionalText={additionalText}
                         />
-
-
                     </Modal.Body>
             </Modal>
         </div>

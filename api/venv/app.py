@@ -52,7 +52,6 @@ def predict_text(uid):
     reqData = request.get_json()
     fileId = ObjectId(reqData['modelId'])
     dataToPredict = reqData['dataToPredict']['Text']
-    print(dataToPredict)
 
     # try:
     result = findFileObjectFromDatabase(collection, fileId, uid)
@@ -131,7 +130,6 @@ def get_models(uid):
         modelData['report'] = file_['report']
 
         modelsData.append(modelData)
-    print(modelsData)
 
     return {'models_data': modelsData}
 

@@ -48,14 +48,14 @@ const HandleDataToPredict = ({uid, classifyingType, featuresLabels, onPredictFor
         predict(url, data)
     }
 
+    /*
     const handleFileSubmit = async (data) => {
         console.log("File Submit")
         console.log(data) //Class is here
     }
-    
+    */
 
     return (
-            //<div style={{color: themeColor, fontSize: '1.3rem'}}>
         <Container fixed sx={{width: "90%", fontSize: "1rem"}}>
             <ClassModal
                 show={showClassPrediction} 

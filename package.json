@@ -22,7 +22,7 @@
     "devextreme-react": "^21.1.5",
     "firebase": "^8.7.1",
     "firebase-admin": "^9.11.1",
-    "firebaseui": "^4.8.1",
+    "firebaseui": "^6.0.0",
     "history": "^5.0.0",
     "material-ui-dropzone": "^3.5.0",
     "mdbreact": "^5.1.0",

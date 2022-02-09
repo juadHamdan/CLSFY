@@ -18,8 +18,6 @@ import BackdropProgress from './components/BackdropProgress'
 import Container from '@mui/material/Container';
 import { Snackbar } from '@mui/material';
 
-const anonymousString = "Anonymous"
-
 const uploadStep = 0
 const reportStep = 1
 const PredictStep = 2
@@ -33,7 +31,6 @@ function App()
   const [classifyingType, setClassifyingType] = useState(TextString)
   const [report, setReport] = useState({})
   const [user, setUser] = useState(null)
-  //const [userType, setUserType] = useState(anonymousString)
   const [uid, setUid] = useState(uuidv4()) //generate unique id for anonymous user
   const [featuresLabels, setFeaturesLabels] = useState([])
   const [modelId, setModelId] = useState(null)
@@ -161,6 +158,8 @@ function App()
   const startRef = useRef(null)
   const executeScrollStart = () => scrollToRef(startRef)
 
+  //const {}
+
   return ( 
     <div style={{fontFamily: 'Calibri light', fontSize: '1.25rem'}}>
       <BackdropProgress 
@@ -179,8 +178,8 @@ function App()
       <Container ref={homeRef} sx={{width: "90%"}}>
         <AppBar
           user={user} 
-          handleLogin={onLogin} 
-          handleLogout={onLogout}
+          onLogin={onLogin} 
+          onLogout={onLogout}
           handleHomeClick={executeScrollHome}
           handleStartClick={executeScrollStart}
         />
@@ -237,12 +236,6 @@ function App()
         </div>
     </div>
   );
-}
-
-const appStyle = 
-{
-  backgroundColor: '#444',
-  color: 'white',
 }
 
 export default App;

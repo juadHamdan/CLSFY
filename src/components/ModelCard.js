@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import CloseButton from 'react-bootstrap/CloseButton'
@@ -8,7 +8,7 @@ import { TextClassificationColor, FeaturesClassificationColor } from '../constan
 
 
 const ModelCard = ({modelData, onClick, handleDelete}) => {
-    const [CreationString, setCreationString] = React.useState("")
+    const [CreationString, setCreationString] = useState("")
 
     const fileName = modelData['file_name']
     const dateTime = modelData['date_time']
@@ -16,12 +16,9 @@ const ModelCard = ({modelData, onClick, handleDelete}) => {
     const classificationType = modelData['report']['classification_type']
     const accuracy = modelData['report']['accuracy']
 
-    React.useEffect(() => {
-        getStringOfDaysFromCreation()
-      }, [dateTime]); // get CreationString when datetime changes
-
-    const getStringOfDaysFromCreation = () => {
-        let dateTimeCreated = new Date(dateTime)
+    useEffect(() => {
+        //get string of days from creation
+                let dateTimeCreated = new Date(dateTime)
         let dateTimeCurrent = new Date()
         // One day in milliseconds
         const oneDay = 1000 * 60 * 60 * 24;
@@ -36,13 +33,12 @@ const ModelCard = ({modelData, onClick, handleDelete}) => {
             setCreationString("Created Yesterday")
         else
             setCreationString(`Created ${diffInDays} Days Ago`)
-    }
+      }, [dateTime]); // get CreationString when datetime changes
+
 
     return (
         <div style={{color: "black", textAlign: 'center'}}>
-                <Card 
-                    style={{width: '20rem'}} 
-                    style={classificationType === 'Text'? TextClassificationBorderColor : FeaturesClassificationBorderColor}>
+            <Card style={classificationType === 'Text'? TextClassificationBorderColor : FeaturesClassificationBorderColor}>
                 <Card.Body >
                     <CloseButton onClick={handleDelete}/>
                     <Button 
@@ -72,8 +68,7 @@ const ModelCard = ({modelData, onClick, handleDelete}) => {
                 <Card.Footer className="text-muted">
                     {CreationString}
                 </Card.Footer>
-                </Card>
-            
+            </Card>
         </div>
     )
 }
