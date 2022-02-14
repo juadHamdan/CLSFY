@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useState, useRef } from 'react'
-import axios from 'axios';
+import HandleModels from './HandleModels'
 import { v4 as uuidv4 } from 'uuid';
 
 import { TextClassificationColor, TextString, FeaturesClassificationColor, FeaturesString } from './constants/Global'
@@ -34,59 +34,26 @@ function App()
   const [uid, setUid] = useState(uuidv4()) //generate unique id for anonymous user
   const [featuresLabels, setFeaturesLabels] = useState([])
   const [modelId, setModelId] = useState(null)
-  const [modelsData, setModelsData] = useState(null)
   const [message, setMessage] = useState(null)
   const [switchOn, setSwitchOn] = useState(false)
   const [disableSwitch, setDisabledSwitch] = useState(false)
   const [showBackdropProgress, setShowBackdropProgress] = useState(false)
 
-  const deleteModelFromDatabase = async (uid, modelIdToDelete) => {
-    const url = 'model/' + uid
-    try {
-        const res = await axios({
-            method: 'delete',
-            url: url,
-            data:{
-              modelIdToDelete
-            }
-        });
-        console.log(res.data)
-        setMessage('Model deleted')
-      } 
-      catch (err) 
-      {
-        console.log(err.response.status)
-      }
-}
-
-  const fetchModelsData = async (uid) => {
-    const url = 'models-data/' + uid
-    try {
-        const res = await axios({
-            method: 'get',
-            url: url
-        });
-        console.log("modelsData: ", res.data)
-        setModelsData(res.data['models_data'])
-      } 
-      catch (err) 
-      {
-        console.log(err.response.status)
-      }
-}
+  const { modelsData, fetchModelsData, deleteModelFromModelsData, deleteModelFromDatabase, resetModelsData  } = HandleModels()
 
   const onLogin = async (userFromLogin) => {
     setUser(userFromLogin)
-    //setUserType(signedString)
     setUid(userFromLogin.uid)
+
     setShowBackdropProgress(true)
     await fetchModelsData(userFromLogin.uid)
     setShowBackdropProgress(false)
   }
 
   const onLogout = () => {
-    console.log("LOGOUT")
     setUser(null)
+    resetModelsData()
+    window.location.reload()
   }
 
   const onPredictFormSubmit = async (predictedClass) => {
@@ -120,12 +87,6 @@ function App()
     setSwitchOn(!switchOn)
   }
 
-  const deleteModelFromModelsData = (modelIdToDelete) => {
-    const newModelsData = modelsData.filter(modelData => modelData['id'] !== modelIdToDelete)
-    console.log(newModelsData)
-    setModelsData(newModelsData)
-  }
-
   const onModelSelection = (modelId, features, type) => {
     if(type === TextString)
     {
@@ -157,8 +118,6 @@ function App()
   const executeScrollHome = () => scrollToRef(homeRef)
   const startRef = useRef(null)
   const executeScrollStart = () => scrollToRef(startRef)
-
-  //const {}
 
   return ( 
     <div style={{fontFamily: 'Calibri light', fontSize: '1.25rem'}}>
@@ -199,7 +158,6 @@ function App()
             <div style={{ height: '5rem' }} />
           </div>
         : null}
-
       </Container>
 
       <div className="waves" role="presentation"></div>

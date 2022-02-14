@@ -53,7 +53,7 @@ def classifyText(data):
     modelTfidfTransformer = pickle.dumps(tfidf_transformer)
 
     # Training the classifier
-    clf = LogisticRegression(max_iter=200).fit(textToPredictFeatures, classesToPredict)
+    clf = LogisticRegression(max_iter=500).fit(textToPredictFeatures, classesToPredict)
     trainedModel = pickle.dumps(clf)
 
     # Predict test data
@@ -64,9 +64,9 @@ def classifyText(data):
                                            output_dict=True)
 
     classesScores = []
-    accuracy = report['accuracy']
+    accuracy = format(report['accuracy'], ".2f")
     for targetName in targetNames:
-        classesScores.append("{}: {}".format(targetName, report[targetName]['f1-score']))
+        classesScores.append("{}: {}".format(targetName, format(report[targetName]['f1-score']), ".2f"))
 
     transformedTargetNames = list(map(str, np.unique(classes)))
     classesToTargetNamesDict = dict(zip(transformedTargetNames, targetNames))
@@ -117,7 +117,7 @@ def classifyFeatures(data):
     trueClassesToTest = trueClassesToTest.astype('float')
 
     # clf = svm.SVC()
-    clf = LogisticRegression(max_iter=200)
+    clf = LogisticRegression(max_iter=500)
     clf.fit(featuresToPredict, classesToPredict)
     trainedModel = pickle.dumps(clf)
 
@@ -127,9 +127,10 @@ def classifyFeatures(data):
     report = metrics.classification_report(trueClassesToTest, predicted, zero_division=0, target_names=targetNames, output_dict=True)
 
     classesScores = []
-    accuracy = report['accuracy']
+    accuracy = format(report['accuracy'], ".2f")
     for targetName in targetNames:
-        classesScores.append("{}: {}".format(targetName, report[targetName]['f1-score']))
+        # print(format(report[targetName]['f1-score'], ".2f")))
+        classesScores.append("{}: {}".format(targetName, format(report[targetName]['f1-score'], ".2f")))
 
     bestFeaturesLabels = []
     if NumOfBestFeatures <= len(featuresLabels):

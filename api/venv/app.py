@@ -70,7 +70,6 @@ def predict_text(uid):
 
 @app.route('/classify-features/<uid>', methods=['POST'])
 def classify_features(uid):
-    # check id not none
     # collection = getCollectionByUserType(userType)
     collection = SignedUsersModels
     file_ = checkFileAllowed(request)
