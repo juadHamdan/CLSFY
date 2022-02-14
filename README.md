@@ -8,9 +8,9 @@
 | Make informed, useful predictions |<br/>
 <hr/>
 
-### Demo
+### Demo https://www.youtube.com/watch?v=_ZD9TbY6CsM
 
-![Alt text](https://user-images.githubusercontent.com/64545813/148655522-bdae0d48-8c00-4a7a-881e-f4e70385eea1.png)
+![CLSFY - after login](https://user-images.githubusercontent.com/64545813/153885319-185e7d40-444f-4faf-aab4-b1b73702b69e.png)
 
 ### Upload File
 
@@ -41,7 +41,7 @@
 
 #### Run the FLASK server (http://localhost:5000) (from a new terminal)
 ```
-.\CLSFY\npm start\api\venv\Scripts\flask run 
+.\CLSFY\api\venv\Scripts\flask run
 ```
 <hr/>
 
