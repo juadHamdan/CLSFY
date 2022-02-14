@@ -8,6 +8,8 @@
 | Make informed, useful predictions |<br/>
 <hr/>
 
+![CLSFY - after login](https://user-images.githubusercontent.com/64545813/153885319-185e7d40-444f-4faf-aab4-b1b73702b69e.png)
+
 ### Demo
 
 ![Alt text](https://user-images.githubusercontent.com/64545813/148655522-bdae0d48-8c00-4a7a-881e-f4e70385eea1.png)
