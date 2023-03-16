@@ -9,7 +9,7 @@
 <hr/>
 
 ### Demo:
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/_ZD9TbY6CsM/0.jpg)](https://www.youtube.com/watch?v=_ZD9TbY6CsM)
+[![Go To CLSFY Demo](https://img.youtube.com/vi/_ZD9TbY6CsM/0.jpg)](https://www.youtube.com/watch?v=_ZD9TbY6CsM)
 
 ![CLSFY - after login](https://user-images.githubusercontent.com/64545813/153885319-185e7d40-444f-4faf-aab4-b1b73702b69e.png)
 
